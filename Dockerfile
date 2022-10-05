@@ -3,9 +3,8 @@ FROM python:3.10
 
 # Updating apt and install Firefox
 RUN apt-get -y update
-RUN apt-get -y install --no-install-recommends ca-certificates curl firefox-esr
+RUN apt-get -y install --no-install-recommends ca-certificates curl firefox-esr firefox-geckodriver
 RUN rm -fr /var/lib/apt/lists/*
-RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin
 RUN apt-get -y purge ca-certificates curl
 
 # Set display port as an environment variable
