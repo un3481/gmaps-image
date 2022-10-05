@@ -55,7 +55,7 @@ def gmaps_image():
         
         # Change image width and height
         image_url = ''
-        if raw_image_url.find('googleusercontent'):
+        if 'googleusercontent' in raw_image_url:
             resized = f'=w{width}-h{height}'
             image_url = sub(usrctt_re, resized, raw_image_url)
         else:
