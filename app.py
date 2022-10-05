@@ -2,6 +2,7 @@
 ##########################################################################################################################
 
 # Imports
+from re import sub
 from json import dumps
 from flask import Flask, request, Response
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
@@ -21,6 +22,9 @@ app = Flask('gmaps_app')
 # Sets options for Firefox Selenium
 firefox_options = Options()
 firefox_options.add_argument('-headless')
+
+# Regular expresion for resizing usercontent images
+usrctt_re = r'=w(\d+)-h(\d+)'
 
 #################################################################################################################################################
 
@@ -50,12 +54,17 @@ def gmaps_image():
         driver.close()
         
         # Change image width and height
-        parsed_url = urlparse(raw_image_url)
-        query = parse_qs(parsed_url.query, keep_blank_values=True)
-        query['w'] = [f'{width}']
-        query['h'] = [f'{height}']
-        parsed_url = parsed_url._replace(query=urlencode(query, True))
-        image_url = urlunparse(parsed_url)
+        image_url = ''
+        if raw_image_url.find('googleusercontent'):
+            resized = f'=w{width}-h{height}'
+            image_url = sub(usrctt_re, resized, raw_image_url)
+        else:
+            parsed_url = urlparse(raw_image_url)
+            query = parse_qs(parsed_url.query, keep_blank_values=True)
+            query['w'] = [f'{width}']
+            query['h'] = [f'{height}']
+            parsed_url = parsed_url._replace(query=urlencode(query, True))
+            image_url = urlunparse(parsed_url)
         
         # Return Data
         return Response(
