@@ -6,6 +6,7 @@ from json import dumps
 from flask import Flask, request, Response
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
 from selenium import webdriver
 
 ##########################################################################################################################
@@ -34,7 +35,7 @@ def gmaps_image():
         driver = webdriver.Firefox(options=firefox_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
-        element = driver.find_element_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
+        element = driver.find_element(By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
         # Get source
         raw_image_url = element.get_attribute('src')
         # Close driver
