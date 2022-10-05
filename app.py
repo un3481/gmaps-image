@@ -14,8 +14,8 @@ from selenium import webdriver
 app = Flask('gmaps_app')
 
 # Sets options for Firefox Selenium
-options = Options()
-options.add_argument('-headless')
+firefox_options = Options()
+firefox_options.add_argument('-headless')
 
 #################################################################################################################################################
 
@@ -31,7 +31,7 @@ def gmaps_image():
             return Response('', status=400)
         
         # Launch driver
-        driver = webdriver.Firefox(firefox_options=options)
+        driver = webdriver.Firefox(options=firefox_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
         elements = driver.find_elements_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
