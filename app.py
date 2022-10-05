@@ -5,7 +5,7 @@
 from json import dumps
 from flask import Flask, request, Response
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
 
 ##########################################################################################################################
@@ -13,14 +13,9 @@ from selenium import webdriver
 # Declare WSGI app
 app = Flask('gmaps_app')
 
-# Sets options for Selenium
-browser_options = Options()
-browser_options.add_argument('--headless')
-browser_options.add_argument('--no-sandbox')
-browser_options.add_argument('--disable-dev-shm-usage')
-browser_prefs = {}
-browser_options.experimental_options['prefs'] = browser_prefs
-browser_prefs['profile.default_content_settings'] = {'images': 2}
+# Sets options for Firefox Selenium
+options = Options()
+options.add_argument('-headless')
 
 #################################################################################################################################################
 
@@ -36,7 +31,7 @@ def gmaps_image():
             return Response('', status=400)
         
         # Launch driver
-        driver = webdriver.Firefox(options=browser_options)
+        driver = webdriver.Firefox(firefox_options=options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
         elements = driver.find_elements_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
