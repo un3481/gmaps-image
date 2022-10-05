@@ -1,5 +1,5 @@
 
-FROM python:3.9
+FROM python:3.10
 
 # Adding Google Chrome to the repositories
 RUN apt-get -y update
