@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 
 # Updating apt and install Firefox
 RUN apt-get -y update
-RUN apt-get -y install python3
+RUN apt-get -y install python3 pip3
 RUN apt-get -y install --no-install-recommends ca-certificates curl firefox firefox-geckodriver
 RUN rm -fr /var/lib/apt/lists/*
 RUN apt-get -y purge ca-certificates curl
