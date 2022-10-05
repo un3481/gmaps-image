@@ -1,5 +1,5 @@
 
-FROM --platform=linux/amd64 python:3.10
+FROM --platform=linux/amd64 python:3.9
 
 # Adding Google Chrome to the repositories
 RUN apt-get -y update
