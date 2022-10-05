@@ -1,6 +1,9 @@
 
 FROM ubuntu:20.04
 
+# set noninteractive installation
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Updating apt and install Firefox
 RUN apt-get -y update
 RUN apt-get -y install python3 python3-pip
