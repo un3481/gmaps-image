@@ -7,7 +7,7 @@ RUN apt-get -y install python3
 RUN apt-get -y install --no-install-recommends ca-certificates curl firefox firefox-geckodriver
 RUN rm -fr /var/lib/apt/lists/*
 RUN apt-get -y purge ca-certificates curl
-RUN apt autoremove
+RUN apt -y autoremove
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
