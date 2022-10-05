@@ -10,7 +10,7 @@ from selenium import webdriver
 
 ##########################################################################################################################
 
-# Declare WSGI APP
+# Declare WSGI app
 app = Flask('gmaps_app')
 
 # Sets chrome options for Selenium
