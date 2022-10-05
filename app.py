@@ -13,14 +13,14 @@ from selenium import webdriver
 # Declare WSGI app
 app = Flask('gmaps_app')
 
-# Sets chrome options for Selenium
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_prefs = {}
-chrome_options.experimental_options['prefs'] = chrome_prefs
-chrome_prefs['profile.default_content_settings'] = {'images': 2}
+# Sets options for Selenium
+browser_options = Options()
+browser_options.add_argument('--headless')
+browser_options.add_argument('--no-sandbox')
+browser_options.add_argument('--disable-dev-shm-usage')
+browser_prefs = {}
+browser_options.experimental_options['prefs'] = browser_prefs
+browser_prefs['profile.default_content_settings'] = {'images': 2}
 
 #################################################################################################################################################
 
@@ -36,8 +36,8 @@ def gmaps_image():
             return Response('', status=400)
         
         # Launch driver
-        search_url = 'https://maps.google.com/maps?q=' + quote(address)
-        driver = webdriver.Chrome(search_url, options=chrome_options)
+        driver = webdriver.Firefox(options=browser_options)
+        driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
         elements = driver.find_elements_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
         if len(elements) == 0:

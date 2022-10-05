@@ -1,23 +1,12 @@
 
 FROM python:3.10
 
-# Adding Google Chrome to the repositories
+# Updating apt and install Firefox
 RUN apt-get -y update
-RUN apt-get -y install wget gnupg ca-certificates
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-
-# Updating apt and install Google Chrome
-RUN apt-get -y update
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb
-RUN apt-get install ./google-chrome-stable_current_arm64.deb
-
-# Download the Chrome Driver
-RUN apt-get -yqq install unzip
-RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/ curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE/chromedriver_linux64.zip
-
-# Unzip the Chrome Driver into /usr/local/bin directory
-RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+RUN apt-get -y install --no-install-recommends ca-certificates curl firefox-esr
+RUN rm -fr /var/lib/apt/lists/*
+RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin
+RUN apt-get -y purge ca-certificates curl
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
