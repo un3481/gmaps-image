@@ -63,7 +63,7 @@ def gmaps_image():
         )
     except Exception as error:
         return Response(
-            dumps({ 'error': error }),
+            dumps({ 'error': f'{error}' }),
             mimetype='application/json',
             status=200
         )
