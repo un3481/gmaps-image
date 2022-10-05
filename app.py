@@ -5,9 +5,13 @@
 from json import dumps
 from flask import Flask, request, Response
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
+
 from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebElement
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 ##########################################################################################################################
 
@@ -22,7 +26,7 @@ firefox_options.add_argument('-headless')
 
 @app.route('/image/')
 def gmaps_image():
-    #try:
+    try:
         args = request.args
         address = args.get('address', default=None, type=str)
         width = args.get('width', default=None, type=int)
@@ -35,7 +39,11 @@ def gmaps_image():
         driver = webdriver.Firefox(options=firefox_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
-        element = driver.find_element(By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
+        element: WebElement = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
+            )
+        )
         # Get source
         raw_image_url = element.get_attribute('src')
         # Close driver
@@ -55,7 +63,7 @@ def gmaps_image():
             mimetype='application/json',
             status=200
         )
-    #except Exception as error:
-    #    return Response('', status=404)
+    except Exception as error:
+        return Response('', status=404)
 
 #################################################################################################################################################
