@@ -34,11 +34,9 @@ def gmaps_image():
         driver = webdriver.Firefox(options=firefox_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
-        elements = driver.find_elements_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
-        if len(elements) == 0:
-            raise Exception('image not found')
+        element = driver.find_element_by_css_selector('[jsaction="pane.heroHeaderImage.click"] >img')
         # Get source
-        raw_image_url = elements[0].get_attribute('src')
+        raw_image_url = element.get_attribute('src')
         # Close driver
         driver.close()
         
