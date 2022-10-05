@@ -44,8 +44,8 @@ def gmaps_image():
         # Change image width and height
         parsed_url = urlparse(raw_image_url)
         query = parse_qs(parsed_url.query, keep_blank_values=True)
-        query['width'] = [f'{width}']
-        query['height'] = [f'{height}']
+        query['w'] = [f'{width}']
+        query['h'] = [f'{height}']
         parsed_url = parsed_url._replace(query=urlencode(query, True))
         image_url = urlunparse(parsed_url)
         
