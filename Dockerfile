@@ -11,7 +11,7 @@ RUN apt-get -y purge ca-certificates curl
 # Set display port as an environment variable
 ENV DISPLAY=:99
 
-COPY . /app
+COPY . /usr/app
 WORKDIR /usr/app
 
 # pip Install Requirements
