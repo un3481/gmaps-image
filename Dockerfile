@@ -8,9 +8,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update
 RUN apt-get -y install python3 python3-pip
 RUN apt-get -y install --no-install-recommends ca-certificates curl firefox firefox-geckodriver
-RUN rm -fr /var/lib/apt/lists/*
-RUN apt-get -y purge ca-certificates curl
-RUN apt -y autoremove
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
