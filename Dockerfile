@@ -9,8 +9,8 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 
 # Updating apt and install Google Chrome
 RUN apt-get -y update
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN apt-get install ./google-chrome-stable_current_amd64.deb
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb
+RUN apt-get install ./google-chrome-stable_current_arm64.deb
 
 # Download the Chrome Driver
 RUN apt-get -yqq install unzip
