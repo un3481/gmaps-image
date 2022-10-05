@@ -21,7 +21,7 @@ firefox_options.add_argument('-headless')
 
 @app.route('/image/')
 def gmaps_image():
-    try:
+    #try:
         args = request.args
         address = args.get('address', default=None, type=str)
         width = args.get('width', default=None, type=int)
@@ -56,11 +56,7 @@ def gmaps_image():
             mimetype='application/json',
             status=200
         )
-    except Exception as error:
-        return Response(
-            dumps({ 'error': f'{error}' }),
-            mimetype='application/json',
-            status=200
-        )
+    #except Exception as error:
+    #    return Response('', status=404)
 
 #################################################################################################################################################
