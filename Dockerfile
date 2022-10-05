@@ -19,4 +19,5 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Run WSGI server on port 80
+EXPOSE 80
 CMD gunicorn "app:app" -b "0.0.0.0:80"
