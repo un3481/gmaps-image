@@ -1,2 +1,2 @@
-# gmaps-scrap
-Container that scraps images from google maps based on location.
+# gmaps-image
+Container that retreives image urls from google maps based on address.
