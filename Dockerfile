@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Updating apt to see and install Google Chrome
 RUN apt-get -y update
-RUN apt-get -y install chromium chromium-chromedriver
+RUN apt-get -y install chromium chromium-driver
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
