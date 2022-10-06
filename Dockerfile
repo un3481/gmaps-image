@@ -4,7 +4,7 @@ FROM python:3.10
 # Set noninteractive installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Updating apt to see and install Google Chrome
+# Update apt and install Chromium
 RUN apt-get -y update
 RUN apt-get -y install chromium chromium-driver
 
