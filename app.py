@@ -8,11 +8,11 @@ from flask import Flask, request, Response
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
 
 from selenium import webdriver
-from selenium.webdriver.remote.webdriver import WebElement
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webdriver import WebElement
 
 ##########################################################################################################################
 
@@ -20,8 +20,13 @@ from selenium.webdriver.support import expected_conditions as EC
 app = Flask('gmaps_app')
 
 # Sets options for Firefox Selenium
-firefox_options = Options()
-firefox_options.add_argument('-headless')
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_prefs = {}
+chrome_options.experimental_options["prefs"] = chrome_prefs
+chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 # Regular expresion for resizing usercontent images
 usrctt_re = r'=w(\d+)-h(\d+)'
@@ -40,7 +45,7 @@ def gmaps_image():
             return Response('', status=400)
         
         # Launch driver
-        driver = webdriver.Firefox(options=firefox_options)
+        driver = webdriver.Chrome(options=chrome_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
         element: WebElement = WebDriverWait(driver, 10).until(
