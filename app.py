@@ -48,7 +48,7 @@ def gmaps_image():
         driver = webdriver.Chrome(options=chrome_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         # Search for element
-        element: WebElement = WebDriverWait(driver, 10).until(
+        element: WebElement = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located(
                 (By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
             )
