@@ -5,8 +5,7 @@ FROM python:3.10
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Add build-essential
-RUN apt-get -y install curl gnupg
-RUN apt-get install g++ build-essential --yes
+RUN apt-get -y install curl gnupg g++
 
 # Adding Google Chrome to the repositories
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
