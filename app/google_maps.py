@@ -2,7 +2,6 @@
 ##########################################################################################################################
 
 # Imports
-from re import sub
 from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
 
 from selenium import webdriver
@@ -22,9 +21,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_prefs = {}
 chrome_options.experimental_options["prefs"] = chrome_prefs
 chrome_prefs["profile.default_content_settings"] = {"images": 2}
-
-# Regular expresion for resizing usercontent images
-usrctt_re = r'=w(\d+)-h(\d+)'
 
 ##########################################################################################################################
 
