@@ -28,7 +28,7 @@ def image():
         
         # Download image
         ok, data = resize.download(url)
-        if not ok: return Response('', status=404)
+        if not ok: return Response('', status=403)
 
         # Transform image
         mimetype, img = data
