@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update apt and install Chromium
 RUN apt-get -y update
-RUN apt-get -y install chromium chromium-driver
+RUN apt-get -y install chromium chromium-driver libgl1
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
