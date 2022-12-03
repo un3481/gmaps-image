@@ -27,9 +27,9 @@ def download(url: str):
         img: cv2.Mat = cv2.imdecode(npimg, cv2.IMREAD_ANYCOLOR)
         
         # Return data
-        return (True, (mimetype, img))
+        return True, (mimetype, img)
     except Exception as error:
-        return (False, error)
+        return False, error
 
 
 ##########################################################################################################################

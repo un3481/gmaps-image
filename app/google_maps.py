@@ -44,9 +44,9 @@ def scrape_url(address: str):
         driver.close()
         
         # Return Data
-        return (True, url)
+        return True, url
     except Exception as error:
-        return (False, error)
+        return False, error
 
 ##########################################################################################################################
 
@@ -65,9 +65,9 @@ def fix_image_size(url: str):
             fixed_url = urlunparse(parsed_url)
         
         # Return Data
-        return (True, fixed_url)
+        return True, fixed_url
     except Exception as error:
-        return (False, error)
+        return False, error
 
 ##########################################################################################################################
 
