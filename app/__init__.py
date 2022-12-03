@@ -32,8 +32,8 @@ def image():
 
         # Transform image
         mimetype, img = data
-        # img = resize.apply_ratio(img, height, width)
-        # img = resize.add_padding(img, height, width)
+        img = resize.apply_ratio(img, height, width)
+        img = resize.add_padding(img, height, width)
         img = resize.encode(img, mimetype)
         
         # Get image bytes
