@@ -51,7 +51,7 @@ def url(address: str):
         image_url = ''
         if 'googleusercontent' in raw_image_url:
             params = raw_image_url.split('=').pop()
-            image_url = raw_image_url.replace(params, '')
+            image_url = raw_image_url.replace(f'={params}', '')
         else:
             image_url = raw_image_url
         #     parsed_url = urlparse(raw_image_url)
