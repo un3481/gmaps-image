@@ -13,7 +13,7 @@ app = Flask('gmaps_image_app')
 # Image route
 @app.route('/image/', methods=['GET'])
 def image():
-    try:
+    # try:
         args = request.args
         address = args.get('address', default=None, type=str)
         width = args.get('width', default=None, type=int)
@@ -50,7 +50,7 @@ def image():
             img_bytes,
             mimetype = mimetype
         )
-    except Exception as error:
-        return Response('', status=501)
+    # except Exception as error:
+    #     return Response('', status=501)
 
 ##########################################################################################################################
