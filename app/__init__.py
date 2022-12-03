@@ -13,7 +13,7 @@ app = Flask('gmaps_image_app')
 # Image route
 @app.route('/image/', methods=['GET'])
 def image():
-    # try:
+    try:
         args = request.args
         address = args.get('address', default=None, type=str)
         width = args.get('width', default=None, type=int)
@@ -22,25 +22,19 @@ def image():
         if address == None or width == None or height == None:
             return Response('', status=400)
         
-        print(f'got request: {address}, {width}, {height}')
-        
         # Get URL of image
         ok, url = google_maps.url(address)
         if not ok: return Response('', status=404)
         
-        print(f'got url: {url}')
-        
         # Download image
         ok, data = resize.download(url)
         if not ok: return Response('', status=404)
-        
-        print(f'got image: {data[0]}')
 
         # Transform image
         mimetype, img = data
-        img = resize.apply_ratio(img, height, width)
-        img = resize.add_padding(img, height, width)
-        img = resize.encode(img, mimetype)
+        # img = resize.apply_ratio(img, height, width)
+        # img = resize.add_padding(img, height, width)
+        # img = resize.encode(img, mimetype)
         
         # Get image bytes
         img_bytes = img.tobytes()
@@ -50,7 +44,7 @@ def image():
             img_bytes,
             mimetype = mimetype
         )
-    # except Exception as error:
-    #     return Response('', status=501)
+    except Exception as error:
+        return Response('', status=501)
 
 ##########################################################################################################################

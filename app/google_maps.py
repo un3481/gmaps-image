@@ -29,7 +29,7 @@ usrctt_re = r'=w(\d+)-h(\d+)'
 ##########################################################################################################################
 
 def url(address: str):
-    # try:
+    try:
         # Launch driver
         driver = webdriver.Chrome(options=chrome_options)
         driver.get('https://maps.google.com/maps?q=' + quote(address))
@@ -62,7 +62,7 @@ def url(address: str):
         
         # Return Data
         return (True, image_url)
-    # except Exception as error:
-    #     return (False, error)
+    except Exception as error:
+        return (False, error)
 
 ##########################################################################################################################
