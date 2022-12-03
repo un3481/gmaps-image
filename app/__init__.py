@@ -3,10 +3,7 @@
 
 # Imports
 from flask import Flask, request, Response
-
-# Modules
-import google_maps
-import resize
+from . import google_maps, resize
 
 ##########################################################################################################################
 
