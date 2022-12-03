@@ -47,12 +47,13 @@ def url(address: str):
         # Close driver
         driver.close()
         
-        # # Change image width and height
-        # image_url = ''
-        # if 'googleusercontent' in raw_image_url:
-        #     resized = f'=w{width}-h{height}'
-        #     image_url = sub(usrctt_re, resized, raw_image_url)
-        # else:
+        # Change image width and height
+        image_url = ''
+        if 'googleusercontent' in raw_image_url:
+            params = raw_image_url.split('=').pop()
+            image_url = raw_image_url.replace(params, '')
+        else:
+            image_url = raw_image_url
         #     parsed_url = urlparse(raw_image_url)
         #     query = parse_qs(parsed_url.query, keep_blank_values=True)
         #     query['w'] = [f'{width}']
@@ -61,7 +62,7 @@ def url(address: str):
         #     image_url = urlunparse(parsed_url)
         
         # Return Data
-        return (True, raw_image_url)
+        return (True, image_url)
     except Exception as error:
         return (False, error)
 
