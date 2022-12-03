@@ -17,7 +17,7 @@ from selenium.webdriver.remote.webdriver import WebElement
 ##########################################################################################################################
 
 # Declare WSGI app
-app = Flask('gmaps_app')
+app = Flask('gmaps_app', methods=['GET'])
 
 # Sets options for Firefox Selenium
 chrome_options = Options()
