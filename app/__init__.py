@@ -22,13 +22,19 @@ def image():
         if address == None or width == None or height == None:
             return Response('', status=400)
         
+        print(f'got request: {address}, {width}, {height}')
+        
         # Get URL of image
         ok, url = google_maps.url(address)
         if not ok: return Response('', status=404)
         
+        print(f'got url: {url}')
+        
         # Download image
         ok, data = resize.download(url)
-        if not ok: return Response('', status=403)
+        if not ok: return Response('', status=404)
+        
+        print(f'got image: {data[0]}')
 
         # Transform image
         mimetype, img = data
