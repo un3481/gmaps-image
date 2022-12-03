@@ -54,8 +54,9 @@ def fix_image_size(url: str):
     try:
         fixed_url = ''
         if 'googleusercontent' in url:
-            params = url.split('=').pop()
-            fixed_url = url.replace(f'={params}', '')
+            split_url = url.split('=')
+            if len(split_url) > 1: split_url.pop()
+            fixed_url = '='.join(url)
         else:
             parsed_url = urlparse(url)
             query = parse_qs(parsed_url.query, keep_blank_values=True)
