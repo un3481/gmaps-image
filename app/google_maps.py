@@ -2,8 +2,7 @@
 ##########################################################################################################################
 
 # Imports
-from re import sub
-from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
+from urllib.parse import quote
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -42,23 +41,10 @@ def url(address: str):
         )
         
         # Get source
-        raw_image_url = element.get_attribute('src')
+        image_url = element.get_attribute('src')
         
         # Close driver
         driver.close()
-        
-        # Change image width and height
-        image_url = ''
-        if 'googleusercontent' in raw_image_url:
-            resized = f'=null'
-            image_url = sub(usrctt_re, resized, raw_image_url)
-        else:
-            parsed_url = urlparse(raw_image_url)
-            query = parse_qs(parsed_url.query, keep_blank_values=True)
-            del query['w']
-            del query['h']
-            parsed_url = parsed_url._replace(query=urlencode(query, True))
-            image_url = urlunparse(parsed_url)
         
         # Return Data
         return (True, image_url)
