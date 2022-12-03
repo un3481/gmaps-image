@@ -2,14 +2,14 @@
 ##########################################################################################################################
 
 # Imports
-from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebElement
+
+from urllib.parse import quote, urlencode, urlparse, urlunparse, parse_qs
 
 ##########################################################################################################################
 
@@ -24,7 +24,7 @@ chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 ##########################################################################################################################
 
-def url(address: str):
+def scrape_url(address: str):
     try:
         # Launch driver
         driver = webdriver.Chrome(options=chrome_options)
@@ -38,28 +38,43 @@ def url(address: str):
         )
         
         # Get source
-        raw_image_url = element.get_attribute('src')
+        url = element.get_attribute('src')
         
         # Close driver
         driver.close()
         
-        # Change image width and height
-        image_url = ''
-        if 'googleusercontent' in raw_image_url:
-            params = raw_image_url.split('=').pop()
-            image_url = raw_image_url.replace(f'={params}', '')
+        # Return Data
+        return (True, url)
+    except Exception as error:
+        return (False, error)
+
+##########################################################################################################################
+
+def fix_image_size(url: str):
+    try:
+        fixed_url = ''
+        if 'googleusercontent' in url:
+            params = url.split('=').pop()
+            fixed_url = url.replace(f'={params}', '')
         else:
-            image_url = raw_image_url
-            parsed_url = urlparse(raw_image_url)
+            parsed_url = urlparse(url)
             query = parse_qs(parsed_url.query, keep_blank_values=True)
             query['w'] = ['999999']
             query['h'] = ['999999']
             parsed_url = parsed_url._replace(query=urlencode(query, True))
-            image_url = urlunparse(parsed_url)
+            fixed_url = urlunparse(parsed_url)
         
         # Return Data
-        return (True, image_url)
+        return (True, fixed_url)
     except Exception as error:
         return (False, error)
+
+##########################################################################################################################
+
+def url(address: str):
+    res = scrape_url(address)
+    ok, url = res
+    if not ok: return res
+    else: return fix_image_size(url)
 
 ##########################################################################################################################

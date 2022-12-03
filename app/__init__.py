@@ -26,8 +26,6 @@ def image():
         ok, url = google_maps.url(address)
         if not ok: return Response('', status=404)
         
-        print(f'url: {url}')
-        
         # Download image
         ok, data = resize.download(url)
         if not ok: return Response('', status=404)
