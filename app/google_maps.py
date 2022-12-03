@@ -54,12 +54,12 @@ def url(address: str):
             image_url = raw_image_url.replace(f'={params}', '')
         else:
             image_url = raw_image_url
-        #     parsed_url = urlparse(raw_image_url)
-        #     query = parse_qs(parsed_url.query, keep_blank_values=True)
-        #     query['w'] = [f'{width}']
-        #     query['h'] = [f'{height}']
-        #     parsed_url = parsed_url._replace(query=urlencode(query, True))
-        #     image_url = urlunparse(parsed_url)
+            parsed_url = urlparse(raw_image_url)
+            query = parse_qs(parsed_url.query, keep_blank_values=True)
+            query['w'] = ['999999']
+            query['h'] = ['999999']
+            parsed_url = parsed_url._replace(query=urlencode(query, True))
+            image_url = urlunparse(parsed_url)
         
         # Return Data
         return (True, image_url)
