@@ -64,8 +64,8 @@ def add_padding(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
     h, w = img.shape[:2]
     
     # Calculate padding
-    pad_vert = round(abs(height - h) / 2)
-    pad_horz = round(abs(width - w) / 2)
+    pad_vert = math.floor(abs(height - h) / 2)
+    pad_horz = math.floor(abs(width - w) / 2)
     pad_odd_vert = height - h - (pad_vert * 2)
     pad_odd_horz = width - w - (pad_horz * 2)
     
