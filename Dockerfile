@@ -1,5 +1,5 @@
 
-FROM python:3.10
+FROM python:3.10-buster
 
 # Set noninteractive installation
 ENV DEBIAN_FRONTEND=noninteractive
