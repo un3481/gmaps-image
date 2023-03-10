@@ -24,6 +24,32 @@ chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 ##########################################################################################################################
 
+def launch_driver():
+    return webdriver.Chrome(options=chrome_options)
+
+##########################################################################################################################
+
+def kill_driver(driver: webdriver.Chrome):
+    try:
+        # Close driver
+        driver.close()
+        driver.quit()
+        
+        # Kill All Chrome Processes
+        for line in os.popen("ps ax | grep chrome | grep -v grep"):
+            fields = line.split()
+            pid = fields[0]
+            os.kill(int(pid), signal.SIGKILL)
+            print("Killed Process " + pid + " in " + line)
+        
+        # Return Data
+        return True
+    except Exception as error:
+        print(f"Error killing processes: {error}")
+        return False
+
+##########################################################################################################################
+
 def scrape_url(driver: webdriver.Chrome, address: str):
     try:
         # Navigate driver
@@ -73,31 +99,5 @@ def url(address: str):
     ok, url = res
     if not ok: return res
     else: return fix_image_size(url)
-
-##########################################################################################################################
-
-def launch_driver():
-    return webdriver.Chrome(options=chrome_options)
-
-##########################################################################################################################
-
-def kill_driver(driver: webdriver.Chrome):
-    try:
-        # Close driver
-        driver.close()
-        driver.quit()
-        
-        # Kill All Chrome Processes
-        for line in os.popen("ps ax | grep chrome | grep -v grep"):
-            fields = line.split()
-            pid = fields[0]
-            os.kill(int(pid), signal.SIGKILL)
-            print("Killed Process " + pid + " in " + line)
-        
-        # Return Data
-        return True
-    except Exception as error:
-        print(f"Error killing processes: {error}")
-        return False
 
 ##########################################################################################################################
