@@ -63,6 +63,11 @@ def apply_ratio(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
 def add_padding(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
     h, w = img.shape[:2]
     
+    # Calculate Kernel
+    min_p = h if h <= w else w
+    k = math.floor(min_p * 0.05) + 1
+    k = k if k % 2 != 0 else k + 1
+    
     # Calculate padding
     pad_vert = math.floor(abs(height - h) / 2)
     pad_horz = math.floor(abs(width - w) / 2)
@@ -79,7 +84,7 @@ def add_padding(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
             pad_horz + pad_odd_horz,
             borderType = cv2.BORDER_REFLECT
         ),
-        (13, 13),
+        (k, k),
         0
     )
 
