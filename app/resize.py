@@ -79,8 +79,8 @@ def add_padding(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
             pad_horz + pad_odd_horz,
             borderType = cv2.BORDER_REFLECT
         ),
-        (15, 15),
-        7
+        (7, 7),
+        0
     )
 
     # Apply blur only to borders
