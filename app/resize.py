@@ -79,7 +79,7 @@ def add_padding(img: cv2.Mat, height: int, width: int) -> cv2.Mat:
             pad_horz + pad_odd_horz,
             borderType = cv2.BORDER_REFLECT
         ),
-        (7, 7),
+        (13, 13),
         0
     )
 
