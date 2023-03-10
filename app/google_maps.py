@@ -1,7 +1,7 @@
-
 ##########################################################################################################################
 
 # Imports
+import os, signal
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -24,10 +24,9 @@ chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 ##########################################################################################################################
 
-def scrape_url(address: str):
+def scrape_url(driver: webdriver.Chrome, address: str):
     try:
-        # Launch driver
-        driver = webdriver.Chrome(options=chrome_options)
+        # Navigate driver
         driver.get('https://maps.google.com/maps?q=' + quote(address))
         
         # Search for element
@@ -36,13 +35,10 @@ def scrape_url(address: str):
                 (By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
             )
         )
-        
+
         # Get source
-        url = element.get_attribute('src')
-        
-        # Close driver
-        driver.close()
-        
+        url = element.get_attribute('src')        
+
         # Return Data
         return True, url
     except Exception as error:
@@ -64,7 +60,7 @@ def fix_image_size(url: str):
             query['h'] = ['999999']
             parsed_url = parsed_url._replace(query=urlencode(query, True))
             fixed_url = urlunparse(parsed_url)
-        
+
         # Return Data
         return True, fixed_url
     except Exception as error:
@@ -77,5 +73,31 @@ def url(address: str):
     ok, url = res
     if not ok: return res
     else: return fix_image_size(url)
+
+##########################################################################################################################
+
+def launch_driver():
+    return webdriver.Chrome(options=chrome_options)
+
+##########################################################################################################################
+
+def kill_driver(driver: webdriver.Chrome):
+    try:
+        # Close driver
+        driver.close()
+        driver.quit()
+        
+        # Kill All Chrome Processes
+        for line in os.popen("ps ax | grep chrome | grep -v grep"):
+            fields = line.split()
+            pid = fields[0]
+            os.kill(int(pid), signal.SIGKILL)
+            print("Killed Process " + pid + " in " + line)
+        
+        # Return Data
+        return True
+    except Exception as error:
+        print(f"Error killing processes: {error}")
+        return False
 
 ##########################################################################################################################
