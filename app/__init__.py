@@ -22,16 +22,8 @@ def image():
         if address == None or width == None or height == None:
             return Response('', status=400)
         
-        # launch driver
-        driver = google_maps.launch_driver()
-        
         # Get URL of image
-        ok, url = google_maps.url(driver, address)
-        
-        # Kill driver
-        google_maps.kill_driver(driver)
-        
-        # Check URL response
+        ok, url = google_maps.url(address)
         if not ok: return Response('', status=404)
         
         # Download image

@@ -24,17 +24,8 @@ chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 ##########################################################################################################################
 
-def launch_driver():
-    return webdriver.Chrome(options=chrome_options)
-
-##########################################################################################################################
-
-def kill_driver(driver: webdriver.Chrome):
+def kill_browser():
     try:
-        # Close driver
-        driver.close()
-        driver.quit()
-        
         # Kill All Chrome Processes
         for line in os.popen("ps ax | grep chrome | grep -v grep"):
             fields = line.split()
@@ -50,20 +41,38 @@ def kill_driver(driver: webdriver.Chrome):
 
 ##########################################################################################################################
 
-def scrape_url(driver: webdriver.Chrome, address: str):
+def scrape_url(address: str):
     try:
-        # Navigate driver
-        driver.get('https://maps.google.com/maps?q=' + quote(address))
+        # Launch driver
+        driver = webdriver.Chrome(options=chrome_options)
         
-        # Search for element
-        element: WebElement = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
-            )
-        )
+        # Set Variables
+        url: str = None
+        err: Exception = None
+        
+        try:
+            # Navigate to Google Maps page
+            driver.get('https://maps.google.com/maps?q=' + quote(address))
 
-        # Get source
-        url = element.get_attribute('src')        
+            # Search for element
+            element: WebElement = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, '[jsaction="pane.heroHeaderImage.click"] >img')
+                )
+            )
+
+            # Get source
+            url = element.get_attribute('src')
+        except Exception as error:
+            err = error
+        
+        # Close driver
+        driver.close()
+        driver.quit()
+        kill_browser()
+        
+        # Raise Error
+        if err != None: raise err
 
         # Return Data
         return True, url
